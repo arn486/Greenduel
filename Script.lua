@@ -69,8 +69,8 @@ repeat task.wait() until game:IsLoaded()
 -- CONFIG VERSION & EARLY LOAD
 -- ============================================================
 local CONFIG_VERSION = 2
-local CONFIG_FILE = "GreenDuelsConfig.json"
-local CONFIG_BACKUP = "GreenDuelsConfig.bak"
+local CONFIG_FILE = "ArnHubConfig.json"
+local CONFIG_BACKUP = "ArnHubConfig.bak"
 
 local earlyConfig = nil
 local function loadEarlyConfig()
@@ -354,8 +354,8 @@ local Steal = { AutoStealEnabled=true, StealRadius=55, StealDuration=0.25, Data=
 -- PRESETS
 -- ============================================================
 local Presets = {}
-local PRESET_FILE = "GreenDuelsPresets.json"
-local LAST_PRESET_FILE = "GreenDuelsLastPreset.json"
+local PRESET_FILE = "ArnHubPresets.json"
+local LAST_PRESET_FILE = "ArnHubLastPreset.json"
 
 local function buildPresetSnapshot() return {
     normalSpeed=State.normalSpeed, carrySpeed=State.carrySpeed,
@@ -460,7 +460,7 @@ local C = {
 
 -- CLEANUP
 do
-    local cleanupNames = {"VyseSlottedGUI","VyseAsireGUI","VyseAsireHubV4","VyseAsireHubV5","VyseAsireHubV5_1","AsireHubV5_1","AsireHubV5_2","LaitoHubV1","GreenDuelsV1"}
+    local cleanupNames = {"VyseSlottedGUI","VyseAsireGUI","VyseAsireHubV4","VyseAsireHubV5","VyseAsireHubV5_1","AsireHubV5_1","AsireHubV5_2","LaitoHubV1","ARBHUBV1"}
     for _,name in ipairs(cleanupNames) do
         pcall(function() local o=game:GetService("CoreGui"):FindFirstChild(name); if o then o:Destroy() end end)
         pcall(function() local o=LP:WaitForChild("PlayerGui"):FindFirstChild(name); if o then o:Destroy() end end)
@@ -728,7 +728,7 @@ local function Main()
     closeBtn.MouseLeave:Connect(function() TweenService:Create(closeBtn, TweenInfo.new(0.1), {TextColor3=C.topBtn}):Play() end)
     closeBtn.MouseButton1Click:Connect(function()
         State.guiVisible = false; mainOuter.Visible = false
-        if _G.GreenDuelsQAHide then pcall(_G.GreenDuelsQAHide, true) end
+        if _ArnHubQAHide then pcall(_G.ArnHubQAHide, true) end
         requestSave()
     end)
 
@@ -1856,7 +1856,7 @@ local function Main()
     local function getRagTimerLbl()
         local char = LP.Character; if not char then return nil end
         local head = char:FindFirstChild("Head"); if not head then return nil end
-        local bb = head:FindFirstChild("GreenDuelsBB"); if not bb then return nil end
+        local bb = head:FindFirstChild("ArnHubBB"); if not bb then return nil end
         return bb:FindFirstChild("RagdollTimerLbl")
     end
 
@@ -2065,8 +2065,8 @@ local function Main()
         if not h or not hrp then return end
         local head=char:FindFirstChild("Head")
         if head then
-            local oldBB=head:FindFirstChild("GreenDuelsBB"); if oldBB then oldBB:Destroy() end
-            local bb=Instance.new("BillboardGui", head); bb.Name="GreenDuelsBB"; bb.Size=UDim2.new(0,180,0,100); bb.StudsOffset=Vector3.new(0,3,0); bb.AlwaysOnTop=true
+            local oldBB=head:FindFirstChild("ArnHubBB"); if oldBB then oldBB:Destroy() end
+            local bb=Instance.new("BillboardGui", head); bb.Name="ArnHubBB"; bb.Size=UDim2.new(0,180,0,100); bb.StudsOffset=Vector3.new(0,3,0); bb.AlwaysOnTop=true
             local list=Instance.new("UIListLayout",bb); list.FillDirection=Enum.FillDirection.Vertical; list.SortOrder=Enum.SortOrder.LayoutOrder; list.VerticalAlignment=Enum.VerticalAlignment.Center; list.Padding=UDim.new(0,2)
             local speedBillLbl=Instance.new("TextLabel",bb); speedBillLbl.Name="SpeedBillLbl"; speedBillLbl.Size=UDim2.new(1,0,0,24); speedBillLbl.BackgroundTransparency=1; speedBillLbl.Text="0.0"; speedBillLbl.TextColor3=Color3.fromRGB(38,240,125); speedBillLbl.Font=Enum.Font.GothamBlack; speedBillLbl.TextScaled=true; speedBillLbl.TextStrokeTransparency=0.1; speedBillLbl.TextStrokeColor3=Color3.new(0,0,0); speedBillLbl.LayoutOrder=1
             local discordLbl=Instance.new("TextLabel",bb); discordLbl.Size=UDim2.new(1,0,0,22); discordLbl.BackgroundTransparency=1; discordLbl.Text="discord.gg/ARNHUB"; discordLbl.TextColor3=Color3.fromRGB(100,255,100); discordLbl.Font=Enum.Font.GothamBold; discordLbl.TextScaled=true; discordLbl.TextStrokeTransparency=0.1; discordLbl.TextStrokeColor3=Color3.new(0,0,0); discordLbl.LayoutOrder=2
@@ -2117,7 +2117,7 @@ local function Main()
         pcall(function()
             local head2=LP.Character and LP.Character:FindFirstChild("Head")
             if head2 then
-                local bb2=head2:FindFirstChild("GreenDuelsBB")
+                local bb2=head2:FindFirstChild("ArnHubBB")
                 local sl=bb2 and bb2:FindFirstChild("SpeedBillLbl")
                 if sl then sl.Text=string.format("%.1f",Vector3.new(hrp.Velocity.X,0,hrp.Velocity.Z).Magnitude) end
             end
@@ -2159,7 +2159,7 @@ local function Main()
         elseif kc==Keys.guiHide then
             if isKb then
                 State.guiVisible=not State.guiVisible; mainOuter.Visible=State.guiVisible
-                if _G.GreenDuelsQAHide then pcall(_G.GreenDuelsQAHide, not State.guiVisible) end
+                if _G.ArnHubQAHide then pcall(_G.ArnHubQAHide, not State.guiVisible) end
                 requestSave()
             end
         end
@@ -2191,12 +2191,12 @@ local function Main()
     -- MINI CLOVER BUTTON
     -- ============================================================
     local cloverBtn = Instance.new("TextButton", gui)
-    cloverBtn.Name = "GreenDuelsClover"
+    cloverBtn.Name = "ArnHubClover"
     cloverBtn.Size = UDim2.new(0,140,0,36)
     cloverBtn.Position = UDim2.new(0,20,0,200)
     cloverBtn.BackgroundColor3 = Color3.fromRGB(14,24,18)
     cloverBtn.BorderSizePixel = 0
-    cloverBtn.Text = "🍀 GreenDuels"
+    cloverBtn.Text = "🍀 ArnHub"
     cloverBtn.TextColor3 = Color3.fromRGB(80,255,80)
     cloverBtn.Font = Enum.Font.GothamBold
     cloverBtn.TextSize = 14
@@ -2237,7 +2237,7 @@ local function Main()
     cloverBtn.MouseButton1Click:Connect(function()
         State.guiVisible = not State.guiVisible
         mainOuter.Visible = State.guiVisible
-        if _G.GreenDuelsQAHide then pcall(_G.GreenDuelsQAHide, not State.guiVisible) end
+        if _G.ArnHubQAHide then pcall(_G.ArnHubQAHide, not State.guiVisible) end
         requestSave()
     end)
 
@@ -2393,7 +2393,7 @@ local function Main()
         end
 
         mainOuter.Visible = State.guiVisible
-        if _G.GreenDuelsQAHide then pcall(_G.GreenDuelsQAHide, not State.guiVisible) end
+        if _G.ArnHubQAHide then pcall(_G.ArnHubQAHide, not State.guiVisible) end
 
         for _, wrapper in pairs(stackWrappers) do wrapper.Visible = not State.stackButtonsHidden end
         if hideButtonsSetter then hideButtonsSetter(State.stackButtonsHidden) end
