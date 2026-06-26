@@ -1,5 +1,5 @@
 -- ==========================================================-- ============================================================
--- GREEN DUELS V2 - COMPLETE & FIXED (Crasher Added)
+-- ARN HUB  - COMPLETE & FIXED (Crasher Added)
 -- Auto TP fixed (downward teleport), saves height correctly
 -- Infinite Jump simplified (no modes/height)
 -- Keybinds (keyboard & controller) save permanently
@@ -30,8 +30,8 @@ local LP = Players.LocalPlayer
 if not LP then LP = Players.PlayerAdded:Wait() end
 
 -- Prevent multiple instances
-if _G.GreenDuelsV2_Running then return end
-_G.GreenDuelsV2_Running = true
+if _G.ARNHUBV2_Running then return end
+_G.ARNHUBV2_Running = true
 
 local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
@@ -89,7 +89,7 @@ if introShouldPlay then
     local _TS = TweenService
     local _PG = LP:WaitForChild("PlayerGui")
     local introGui = Instance.new("ScreenGui")
-    introGui.Name = "GreenHUBIntro"
+    introGui.Name = "ArnHUBIntro"
     introGui.ResetOnSpawn = false
     introGui.IgnoreGuiInset = true
     introGui.DisplayOrder = 999
@@ -129,7 +129,7 @@ if introShouldPlay then
     title.Size = UDim2.new(1,0,0,50)
     title.Position = UDim2.new(0,0,0,170)
     title.BackgroundTransparency = 1
-    title.Text = "GREEN DUELS V2"
+    title.Text = "ARN HUB"
     title.TextColor3 = Color3.fromRGB(80,255,80)
     title.TextTransparency = 1
     title.TextScaled = true
@@ -142,7 +142,7 @@ if introShouldPlay then
     sub.Size = UDim2.new(0.8,0,0,30)
     sub.Position = UDim2.new(0.1,0,0,230)
     sub.BackgroundTransparency = 1
-    sub.Text = "LUCK IN PROGRESS"
+    sub.Text = "ARN IN PROGRESS"
     sub.TextColor3 = Color3.fromRGB(100,200,100)
     sub.TextTransparency = 1
     sub.TextScaled = true
@@ -558,11 +558,11 @@ end)
 -- ============================================================
 
 local function Main()
-    if _G.GreenDuelsV2_MainExecuted then return end
-    _G.GreenDuelsV2_MainExecuted = true
+    if _G.ARNHUBV2_MainExecuted then return end
+    _G.ARNHUBV2_MainExecuted = true
 
     local gui=Instance.new("ScreenGui")
-    gui.Name="GreenDuelsV2"; gui.ResetOnSpawn=false; gui.DisplayOrder=10
+    gui.Name="ARNHUBV2"; gui.ResetOnSpawn=false; gui.DisplayOrder=10
     gui.IgnoreGuiInset=true; gui.ZIndexBehavior=Enum.ZIndexBehavior.Sibling
     gui.Parent=LP:WaitForChild("PlayerGui")
     local uiScaleObj=Instance.new("UIScale",gui); uiScaleObj.Scale=1.0
@@ -709,7 +709,7 @@ local function Main()
 
     local titleLbl = Instance.new("TextLabel", titleBar)
     titleLbl.Size = UDim2.new(0,160,0,16); titleLbl.Position = UDim2.new(0,50,0,7)
-    titleLbl.BackgroundTransparency = 1; titleLbl.Text = "Green Duels"
+    titleLbl.BackgroundTransparency = 1; titleLbl.Text = "ARN HUBs"
     titleLbl.TextColor3 = C.topTitle; titleLbl.Font = Enum.Font.GothamBlack; titleLbl.TextSize = 14
     titleLbl.TextXAlignment = Enum.TextXAlignment.Left; titleLbl.ZIndex = 6
 
@@ -1300,7 +1300,7 @@ local function Main()
             end)
             makeGap(10)
             local fw = Instance.new("Frame", currentPage); fw.Size = UDim2.new(1,0,0,22); fw.BackgroundTransparency=1; fw.BorderSizePixel=0; fw.LayoutOrder=LO()
-            local fl = Instance.new("TextLabel", fw); fl.Size = UDim2.new(1,0,1,0); fl.BackgroundTransparency=1; fl.Text="Green Duels  ·  powered by luck 🍀"; fl.TextColor3=Color3.fromRGB(50,100,65); fl.Font=Enum.Font.Gotham; fl.TextSize=10; fl.TextXAlignment=Enum.TextXAlignment.Center
+            local fl = Instance.new("TextLabel", fw); fl.Size = UDim2.new(1,0,1,0); fl.BackgroundTransparency=1; fl.Text="ARN HUB  ·  powered by ARN 🍀"; fl.TextColor3=Color3.fromRGB(50,100,65); fl.Font=Enum.Font.Gotham; fl.TextSize=10; fl.TextXAlignment=Enum.TextXAlignment.Center
             _G._VezySaveStatusLbl = fl
             _G._VezyFlashSave = function(success)
                 if not _G._VezySaveStatusLbl or not _G._VezySaveStatusLbl.Parent then return end
@@ -2069,7 +2069,7 @@ local function Main()
             local bb=Instance.new("BillboardGui", head); bb.Name="GreenDuelsBB"; bb.Size=UDim2.new(0,180,0,100); bb.StudsOffset=Vector3.new(0,3,0); bb.AlwaysOnTop=true
             local list=Instance.new("UIListLayout",bb); list.FillDirection=Enum.FillDirection.Vertical; list.SortOrder=Enum.SortOrder.LayoutOrder; list.VerticalAlignment=Enum.VerticalAlignment.Center; list.Padding=UDim.new(0,2)
             local speedBillLbl=Instance.new("TextLabel",bb); speedBillLbl.Name="SpeedBillLbl"; speedBillLbl.Size=UDim2.new(1,0,0,24); speedBillLbl.BackgroundTransparency=1; speedBillLbl.Text="0.0"; speedBillLbl.TextColor3=Color3.fromRGB(38,240,125); speedBillLbl.Font=Enum.Font.GothamBlack; speedBillLbl.TextScaled=true; speedBillLbl.TextStrokeTransparency=0.1; speedBillLbl.TextStrokeColor3=Color3.new(0,0,0); speedBillLbl.LayoutOrder=1
-            local discordLbl=Instance.new("TextLabel",bb); discordLbl.Size=UDim2.new(1,0,0,22); discordLbl.BackgroundTransparency=1; discordLbl.Text="discord.gg/GreenDuels"; discordLbl.TextColor3=Color3.fromRGB(100,255,100); discordLbl.Font=Enum.Font.GothamBold; discordLbl.TextScaled=true; discordLbl.TextStrokeTransparency=0.1; discordLbl.TextStrokeColor3=Color3.new(0,0,0); discordLbl.LayoutOrder=2
+            local discordLbl=Instance.new("TextLabel",bb); discordLbl.Size=UDim2.new(1,0,0,22); discordLbl.BackgroundTransparency=1; discordLbl.Text="discord.gg/ARNHUB"; discordLbl.TextColor3=Color3.fromRGB(100,255,100); discordLbl.Font=Enum.Font.GothamBold; discordLbl.TextScaled=true; discordLbl.TextStrokeTransparency=0.1; discordLbl.TextStrokeColor3=Color3.new(0,0,0); discordLbl.LayoutOrder=2
             local ragTimerLbl=Instance.new("TextLabel",bb); ragTimerLbl.Name="RagdollTimerLbl"; ragTimerLbl.Size=UDim2.new(1,0,0,30); ragTimerLbl.BackgroundTransparency=1; ragTimerLbl.Text=""; ragTimerLbl.TextColor3=Color3.fromRGB(255,60,60); ragTimerLbl.Font=Enum.Font.GothamBlack; ragTimerLbl.TextScaled=true; ragTimerLbl.TextStrokeTransparency=0.1; ragTimerLbl.TextStrokeColor3=Color3.new(0,0,0); ragTimerLbl.LayoutOrder=3
 
         end
@@ -2508,7 +2508,7 @@ end
 -- ============================================================
 -- SAFE MAIN EXECUTION
 -- ============================================================
-if not _G.GreenDuelsV2_MainExecuted then
+if not _G.ARNHUBV2_MainExecuted then
     if LP and LP:FindFirstChild("PlayerGui") then
         Main()
     else
