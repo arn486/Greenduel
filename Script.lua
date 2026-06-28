@@ -1,13 +1,4 @@
-local blacklist = {
-    ["TWWIXAARXN07"] = true,
-    ["TWIXAARXN"] = true
-}
 
-game.Players.PlayerAdded:Connect(function(player)
-    if blacklist[player.Name] then
-        player:Kick("Tu es blacklisté.")
-    end
-end)
 -- ==========================================================-- ============================================================
 -- ARN HUB  - COMPLETE & FIXED (Crasher Added)
 -- Auto TP fixed (downward teleport), saves height correctly
