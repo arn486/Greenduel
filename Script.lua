@@ -1945,7 +1945,7 @@ local function Main()
                                     end
                                     if not bestPrompt then
                                         for _,prompt in ipairs(spawn:GetDescendants()) do
-                                            if prompt:IsA("ProximityPrompt") and prompt.ActionText and prompt.ActionText:find("Steal") then bestPrompt,bestDist=prompt,dist end
+                                            if prompt:IsA("ProximityPrompt") and prompt:IsA("ProximityPrompt") then bestPrompt,bestDist=prompt,dist end
                                         end
                                     end
                                 end
