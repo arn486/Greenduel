@@ -1974,26 +1974,7 @@ local function executeSteal(prompt)
         resetProgressBar(); isStealing=false; State.isStealing=false
     end)
 end
-        end
-        local data=stealDataCache[prompt]
-        if not data.ready then return end
-        data.ready=false
-        isStealing=true; State.isStealing=true
-        local startTime=tick(); local duration=Steal.StealDuration
-        if stealProgressConn then stealProgressConn:Disconnect() end
-        stealProgressConn=RunService.Heartbeat:Connect(function()
-            if not isStealing then if stealProgressConn then stealProgressConn:Disconnect(); stealProgressConn=nil end; return end
-            local elapsed=tick()-startTime; local prog=math.clamp(elapsed/duration,0,1); updateProgressBar(prog)
-        end)
-        task.spawn(function()
-            for _,fn in ipairs(data.hold) do task.spawn(fn) end
-            local elapsed=0
-            while elapsed<duration do elapsed=elapsed+task.wait() end
-            for _,fn in ipairs(data.trigger) do task.spawn(fn) end
-            task.wait(0.05)
-            if stealProgressConn then stealProgressConn:Disconnect(); stealProgressConn=nil end
-            resetProgressBar(); data.ready=true; isStealing=false; State.isStealing=false
-        end)
+end
     end
     local autoStealConn=nil
     startAutoSteal = function()
