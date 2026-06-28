@@ -1912,7 +1912,8 @@ local function Main()
     -- ============================================================
     -- AUTO-STEAL (unchanged)
     -- ============================================================
-    local isStealing=false
+  
+local isStealing=false
     local stealProgressConn=nil
     local function updateProgressBar(progress) if progressFill and stealPctLbl then progressFill.Size=UDim2.new(progress,0,1,0); stealPctLbl.Text=math.floor(progress*100).."%" end end
     local function resetProgressBar() updateProgressBar(0) end
@@ -1940,12 +1941,12 @@ local function Main()
                                     local att=spawn:FindFirstChild("PromptAttachment")
                                     if att then
                                         for _,prompt in ipairs(att:GetChildren()) do
-                                            if prompt:IsA("ProximityPrompt") and prompt.ActionText and prompt.ActionText:find("Steal") then bestPrompt,bestDist=prompt,dist end
+                                            if prompt:IsA("ProximityPrompt") then bestPrompt,bestDist=prompt,dist end
                                         end
                                     end
                                     if not bestPrompt then
                                         for _,prompt in ipairs(spawn:GetDescendants()) do
-                                            if prompt:IsA("ProximityPrompt") and prompt:IsA("ProximityPrompt") then bestPrompt,bestDist=prompt,dist end
+                                            if prompt:IsA("ProximityPrompt") then bestPrompt,bestDist=prompt,dist end
                                         end
                                     end
                                 end
@@ -1958,22 +1959,22 @@ local function Main()
         return bestPrompt
     end
     local stealDataCache={}
-local function executeSteal(prompt)
-    if isStealing then return end
-    isStealing=true; State.isStealing=true
-    local startTime=tick(); local duration=Steal.StealDuration
-    if stealProgressConn then stealProgressConn:Disconnect() end
-    stealProgressConn=RunService.Heartbeat:Connect(function()
-        if not isStealing then if stealProgressConn then stealProgressConn:Disconnect(); stealProgressConn=nil end; return end
-        local elapsed=tick()-startTime; local prog=math.clamp(elapsed/duration,0,1); updateProgressBar(prog)
-    end)
-    task.spawn(function()
-        pcall(function() fireproximityprompt(prompt) end)
-        task.wait(duration)
-        if stealProgressConn then stealProgressConn:Disconnect(); stealProgressConn=nil end
-        resetProgressBar(); isStealing=false; State.isStealing=false
-    end)
-end
+    local function executeSteal(prompt)
+        if isStealing then return end
+        isStealing=true; State.isStealing=true
+        local startTime=tick(); local duration=Steal.StealDuration
+        if stealProgressConn then stealProgressConn:Disconnect() end
+        stealProgressConn=RunService.Heartbeat:Connect(function()
+            if not isStealing then if stealProgressConn then stealProgressConn:Disconnect(); stealProgressConn=nil end; return end
+            local elapsed=tick()-startTime; local prog=math.clamp(elapsed/duration,0,1); updateProgressBar(prog)
+        end)
+        task.spawn(function()
+            pcall(function() fireproximityprompt(prompt) end)
+            task.wait(duration)
+            if stealProgressConn then stealProgressConn:Disconnect(); stealProgressConn=nil end
+            resetProgressBar(); isStealing=false; State.isStealing=false
+        end)
+    end
     local autoStealConn=nil
     startAutoSteal = function()
         if autoStealConn then return end
