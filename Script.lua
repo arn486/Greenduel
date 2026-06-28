@@ -1958,17 +1958,22 @@ local function Main()
         return bestPrompt
     end
     local stealDataCache={}
-    local function executeSteal(prompt)
-        if isStealing then return end
-        if not stealDataCache[prompt] then
-            local data={hold={},trigger={},ready=true}
-            if getconnections then
-                local holds=getconnections(prompt.PromptButtonHoldBegan)
-                for _,conn in ipairs(holds) do if conn.Function then table.insert(data.hold,conn.Function) end end
-                local triggers=getconnections(prompt.Triggered)
-                for _,conn in ipairs(triggers) do if conn.Function then table.insert(data.trigger,conn.Function) end end
-            end
-            stealDataCache[prompt]=data
+local function executeSteal(prompt)
+    if isStealing then return end
+    isStealing=true; State.isStealing=true
+    local startTime=tick(); local duration=Steal.StealDuration
+    if stealProgressConn then stealProgressConn:Disconnect() end
+    stealProgressConn=RunService.Heartbeat:Connect(function()
+        if not isStealing then if stealProgressConn then stealProgressConn:Disconnect(); stealProgressConn=nil end; return end
+        local elapsed=tick()-startTime; local prog=math.clamp(elapsed/duration,0,1); updateProgressBar(prog)
+    end)
+    task.spawn(function()
+        pcall(function() fireproximityprompt(prompt) end)
+        task.wait(duration)
+        if stealProgressConn then stealProgressConn:Disconnect(); stealProgressConn=nil end
+        resetProgressBar(); isStealing=false; State.isStealing=false
+    end)
+end
         end
         local data=stealDataCache[prompt]
         if not data.ready then return end
