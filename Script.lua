@@ -1974,7 +1974,6 @@ local function executeSteal(prompt)
         resetProgressBar(); isStealing=false; State.isStealing=false
     end)
 end
-end
     end
     local autoStealConn=nil
     startAutoSteal = function()
